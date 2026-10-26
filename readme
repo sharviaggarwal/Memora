@@ -1,0 +1,464 @@
+# Memora 🧠
+
+> **Your personal memory and action assistant.**
+
+Memora is an AI-powered personal knowledge and action assistant that combines **long-term memory, Retrieval-Augmented Generation (RAG), natural-language task management, vector search, and LLM-based routing** into a single conversational system.
+
+Instead of treating every conversation as temporary, Memora can remember user-provided information, answer questions from uploaded documents, and help manage tasks and deadlines using natural language.
+
+---
+
+## ✨ Features
+
+### 🧠 Personal Memory
+
+Memora can store and retrieve user-specific information using semantic vector search.
+
+For example:
+
+> "My favorite color is pink."
+
+Later:
+
+> "What is my favorite color?"
+
+Memora retrieves the relevant stored memory and responds accordingly.
+
+---
+
+### 📚 Document RAG
+
+Memora supports question answering over documents using a Retrieval-Augmented Generation pipeline.
+
+The system:
+
+```text
+Document
+   ↓
+Text extraction
+   ↓
+Chunking
+   ↓
+Embeddings
+   ↓
+Vector storage
+   ↓
+Semantic retrieval
+   ↓
+Relevant context
+   ↓
+LLM
+   ↓
+Answer + sources
+```
+
+This allows users to ask questions about their documents without relying only on the model's pretrained knowledge.
+
+---
+
+### 🤖 Intelligent Query Routing
+
+Memora determines what the user is trying to accomplish and routes the request to the appropriate capability.
+
+```text
+                    User Query
+                        │
+                        ▼
+                  Query Router
+                        │
+       ┌────────────────┼────────────────┐
+       ▼                ▼                ▼
+    MEMORY             RAG             ACTION
+       │                │                │
+       ▼                ▼                ▼
+   ChromaDB          Documents        Task DB
+                         │
+                         ▼
+                     DATABASE
+```
+
+Current routing categories include:
+
+- `MEMORY`
+- `RAG`
+- `ACTION`
+- `DATABASE`
+
+This allows users to interact with the system naturally without manually selecting a mode.
+
+---
+
+### ✅ Natural-Language Task Management
+
+Memora can create and manage tasks through conversational commands.
+
+Examples:
+
+```text
+"Remind me to apply for the internship."
+
+"Prepare internship documents tomorrow."
+
+"Finish the project in 3 days."
+
+"Attend the meeting next Friday."
+```
+
+Tasks are persisted in the existing database and can subsequently be queried, completed, or deleted.
+
+---
+
+### 📅 Natural-Language Date Understanding
+
+Memora understands relative and natural-language dates such as:
+
+- `today`
+- `tomorrow`
+- `in 3 days`
+- `next Monday`
+- `next Friday`
+- `October 30`
+
+These expressions are converted into normalized dates for reliable database operations.
+
+---
+
+### 🔎 Task Queries
+
+Memora can answer queries such as:
+
+**General tasks**
+
+> "What tasks do I have?"
+
+**Specific date**
+
+> "What's due tomorrow?"
+
+**Date range**
+
+> "What's due this week?"
+
+**Overdue**
+
+> "What am I overdue on?"
+
+**Upcoming**
+
+> "What deadlines are coming up?"
+
+**Task completion**
+
+> "Mark my internship task as completed."
+
+**Task deletion**
+
+> "Delete my temporary task."
+
+---
+
+## 🏗️ Architecture
+
+```text
+                         ┌──────────────────┐
+                         │     User         │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │   Memora UI      │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │ Query Processing │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │   LLM Router     │
+                         └────────┬─────────┘
+                                  │
+          ┌───────────────────────┼───────────────────────┐
+          │                       │                       │
+          ▼                       ▼                       ▼
+     ┌──────────┐           ┌──────────┐           ┌──────────┐
+     │  Memory  │           │   RAG    │           │  Action  │
+     └────┬─────┘           └────┬─────┘           └────┬─────┘
+          │                      │                      │
+          ▼                      ▼                      ▼
+      ChromaDB              Documents               SQLite
+          │                      │                      │
+          └──────────────────────┼──────────────────────┘
+                                 │
+                                 ▼
+                            LLM Response
+                                 │
+                                 ▼
+                           User-friendly
+                              Output
+```
+
+---
+
+## 🧩 Tech Stack
+
+### AI / Machine Learning
+
+- Python
+- Large Language Models
+- Ollama
+- Sentence Transformers
+- Embeddings
+- Semantic Search
+- Retrieval-Augmented Generation (RAG)
+- LLM-based Query Routing
+
+### Data & Retrieval
+
+- ChromaDB
+- SQLite
+- Vector embeddings
+- Metadata-based retrieval
+
+### Backend
+
+- Python
+- FastAPI
+- REST API
+
+### Frontend
+
+- React
+- Modern responsive UI
+- Supabase Authentication
+
+### Development
+
+- Jupyter Notebook
+- VS Code
+- Git
+- GitHub
+
+---
+
+## 🔄 Example Workflow
+
+A typical Memora interaction can look like this:
+
+```text
+User:
+"What is my internship deadline?"
+          ↓
+Query Router
+          ↓
+MEMORY
+          ↓
+Semantic Search
+          ↓
+Relevant stored memory
+          ↓
+LLM
+          ↓
+"My internship application deadline is October 30."
+```
+
+Another example:
+
+```text
+User:
+"What's due this week?"
+          ↓
+Query Router
+          ↓
+DATABASE
+          ↓
+DATE_RANGE
+          ↓
+SQLite
+          ↓
+Pending tasks within date range
+          ↓
+Human-readable response
+```
+
+And for documents:
+
+```text
+User:
+"What does the document say about environment?"
+          ↓
+Query Router
+          ↓
+RAG
+          ↓
+Vector Search
+          ↓
+Relevant document chunks
+          ↓
+LLM
+          ↓
+Answer + Sources
+```
+
+---
+
+## 🔐 Authentication
+
+Memora uses **Supabase Authentication** for user authentication and session management.
+
+The application supports:
+
+- User registration
+- Login
+- Logout
+- Persistent sessions
+- Authentication state handling
+
+Authentication is separated from the core AI retrieval and task-management systems.
+
+---
+
+## 📁 Project Structure
+
+```text
+Memora/
+│
+├── code.ipynb
+│
+├── frontend/
+│   ├── ...
+│
+├── chroma_db/
+│   └── ...
+│
+├── ...
+│
+├── .env.example
+├── .gitignore
+└── README.md
+```
+
+> Local databases, vector stores, credentials, and environment-specific files should not be committed to the repository.
+
+---
+
+## ⚙️ Setup
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repository-url>
+cd Memora
+```
+
+### 2. Create a virtual environment
+
+```bash
+python -m venv venv
+```
+
+Activate it on Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure environment variables
+
+Create a `.env` file based on `.env.example`.
+
+Add the required configuration for:
+
+- LLM / Ollama
+- embeddings
+- Supabase
+- other project-specific services
+
+### 5. Start the application
+
+Follow the backend/frontend startup instructions included in the project.
+
+---
+
+## 🧪 Example Queries
+
+Try asking Memora:
+
+```text
+What is my favorite color?
+
+What do I remember about my internship?
+
+What is environment?
+
+Remind me to submit my application tomorrow.
+
+What's due this week?
+
+What am I overdue on?
+
+What deadlines are coming up?
+
+Mark my internship task as completed.
+
+Delete my temporary task.
+```
+
+---
+
+## 🎯 Key Engineering Concepts Demonstrated
+
+Memora demonstrates practical implementation of:
+
+- Retrieval-Augmented Generation
+- Vector databases
+- Embedding-based semantic search
+- LLM-powered routing
+- Long-term AI memory
+- Document question answering
+- Natural-language date parsing
+- Persistent task management
+- SQLite database operations
+- LLM application architecture
+- API-based frontend/backend integration
+- Authentication
+- AI agent-style workflows
+
+---
+
+## 🚀 Future Improvements
+
+Potential future improvements include:
+
+- More advanced memory management
+- Better conversational context handling
+- Multi-document workflows
+- Improved document ingestion
+- Streaming LLM responses
+- More sophisticated agent planning
+- Production database infrastructure
+- Cloud deployment
+- More robust multi-user data isolation
+
+---
+
+## 👩‍💻 Author
+
+**Sharvi Aggarwal**
+
+B.Tech — Electronics & Communication Engineering
+
+Interested in **AI/ML, Generative AI, RAG systems, AI agents, and intelligent application development.**
+
+---
+
+## ⭐ Project
+
+Memora was built to explore how LLMs can move beyond simple question-answering systems and become useful personal assistants capable of **remembering information, retrieving knowledge, and taking actions through natural language.**
